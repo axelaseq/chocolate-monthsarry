@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Chocolate Memories — Romantic Edition</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg1:#ffdfe8;
+  --bg2:#ffeef6;
+  --accent:#ff7aa2;
+  --accent-2:#ffb3c7;
+  --accent-glow:#ff69b4;
+  --muted:#8b6b7a;
+  --heart-color:#ff69b4;
+  --sparkle-color:#ffd700;
+}
+
+/* General */
+*{box-sizing:border-box;}
+html,body{margin:0;font-family:"Poppins",system-ui;}
+body{
+  background: 
+    radial-gradient(1200px 600px at 10% 10%, rgba(255,255,255,0.45), transparent),
+    linear-gradient(135deg,var(--bg1) 0%, var(--bg2) 100%);
+  padding:20px;
+  min-height:100vh;
+  position:relative;
+  overflow-x:hidden;
+}
+
+/* Enhanced Particle Effects */
+.particle-layer{
+  pointer-events:none;
+  position:fixed; inset:0; z-index:0;
+  background:transparent;
+  overflow:hidden;
+}
+.heart, .spark, .glow-particle{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+}
+.heart{
+  background: linear-gradient(45deg, var(--heart-color), #ff1493);
+  width:12px; height:12px;
+  animation:heartAnim 8s ease-in-out infinite;
+  box-shadow: 0 0 10px var(--heart-color);
+}
+.spark{
+  background: radial-gradient(circle, var(--sparkle-color) 0%, transparent 70%);
+  animation:sparkAnim 6s linear infinite;
+  box-shadow: 0 0 8px var(--sparkle-color);
+}
+.glow-particle{
+  background: radial-gradient(circle, rgba(255,105,180,0.8) 0%, transparent 70%);
+  animation:glowAnim 10s ease-in-out infinite;
+}
+@keyframes heartAnim{
+  0%{
+    transform: translateY(100vh) rotate(0deg) scale(0);
+    opacity:0;
+  }
+  10%{
+    opacity:1;
+    transform: translateY(90vh) rotate(45deg) scale(1);
+  }
+  50%{
+    opacity:0.9;
+    transform: translateY(50vh) rotate(180deg) scale(1.2);
+  }
+  100%{
+    transform: translateY(-100px) rotate(360deg) scale(0.8);
+    opacity:0;
+  }
+}
+@keyframes sparkAnim{
+  0%{
+    transform: translateY(100vh) scale(0) rotate(0deg);
+    opacity:0;
+  }
+  20%{
+    opacity:1;
+    transform: translateY(80vh) scale(1) rotate(180deg);
+  }
+  100%{
+    transform: translateY(-50px) scale(0.5) rotate(720deg);
+    opacity:0;
+  }
+}
+@keyframes glowAnim{
+  0%, 100%{
+    transform: scale(0) translateY(100vh);
+    opacity:0;
+  }
+  50%{
+    transform: scale(1.5) translateY(40vh);
+    opacity:0.6;
+  }
+}
+
+/* Floating hearts background */
+.floating-hearts{
+  position:fixed;
+  top:0; left:0; width:100%; height:100%;
+  pointer-events:none;
+  z-index:1;
+  overflow:hidden;
+}
+.floating-heart{
+  position:absolute;
+  color:var(--heart-color);
+  font-size:20px;
+  animation: floatHeart 15s linear infinite;
+  opacity:0.7;
+  text-shadow: 0 0 10px var(--heart-color);
+}
+@keyframes floatHeart{
+  0%{
+    transform: translateY(100vh) rotate(0deg) scale(0.5);
+    opacity:0;
+  }
+  10%{
+    opacity:0.8;
+  }
+  90%{
+    opacity:0.8;
+  }
+  100%{
+    transform: translateY(-100px) rotate(360deg) scale(1.2);
+    opacity:0;
+  }
+}
+
+/* Enhanced Wrapper */
+.wrap{
+  width:100%; max-width:1000px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:360px 1fr;
+  gap:25px;
+  position:relative;
+  z-index:3;
+  animation: fadeInUp 1s  from{opacity:0; transform:translateY(30px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* Enhanced Left panel */
+.left{
+  padding:25px;
+  border-radius:20px;
+  background: linear-gradient(145deg, 
+    rgba(255,255,255,0.4) 0%, 
+    rgba(255,255,255,0.25) 100%);
+  backdrop-filter: blur(10px);
+  border:1px solid rgba(255,255,255,0.2);
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+  align-items:center;
+  justify-content:flex-start;
+  transition:all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 
+    0 20px 40px rgba(255,122,162,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+}
+.left::before{
+  content:'';
+  position:absolute;
+  top:-2px; left:-2px; right:-2px; bottom:-2px;
+  background: linear-gradient(45deg, var(--accent), var(--accent-2), var(--accent-glow), var(--accent));
+  border-radius:22px;
+  z-index:-1;
+  opacity:0;
+  transition: opacity 0.3s ease;
+}
+.left:hover::before{opacity:1;}
+.brand {text-align:center; margin-bottom:10px;}
+.brand h2{
+  font-family:"Great Vibes",cursive;
+  color:var(--accent);
+  font-size:38px;
+  margin:0;
+  text-shadow: 0 2px 4px rgba(255,122,162,0.3);
+  animation: glowPulse 3s ease-in-out infinite alternate;
+}
+@keyframes glowPulse{
+  from{text-shadow: 0 2px 4px rgba(255,122,162,0.3);}
+  to{text-shadow: 0 2px 20px rgba(255,122,162,0.6), 0 0 30px rgba(255,122,162,0.4);}
+}
+.brand p{font-size:13px;color:var(--muted);margin:5px 0 0 0;}
+
+/* Login - Clean and Simple */
+.login, #menuBlock{
+  width:100%; 
+  display:flex; 
+  flex-direction:column; 
+  gap:12px;
+  align-items:stretch;
+  animation: slideInLeft 0.8s ease-out;
+}
+@keyframes slideInLeft{
+  from{opacity:0; transform:translateX(-20px);}
+  to{opacity:1; transform:translateX(0);}
+}
+.login .brand{display:none;} /* Hide brand on login */
+.field{
+  background:rgba(255,255,255,0.85);
+  border-radius:15px;
+  padding:12px 15px;
+  display:flex;
+  align-items:center;
+  border:1px solid rgba(255,255,255,0.3);
+  transition:all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+.field:focus-within{
+  transform:translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255,122,162,0.15);
+  border-color:var(--accent);
+}
+.field input{
+  border:0; 
+  outline:0; 
+  background:transparent; 
+  width:100%; 
+  font-size:15px;
+  padding:5px;
+}
+.enter-btn{
+  margin-top:10px;
+  padding:15px;
+  border-radius:15px;
+  border:0;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  font-size:16px;
+  box-shadow: 
+    0 8px 25px rgba(255,122,162,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+  transition:all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position:relative;
+  overflow:hidden;
+}
+.enter-btn::before{
+  content:'';
+  position:absolute;
+  top:0; left:-100%; width:100%; height:100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s;
+}
+.enter-btn:hover::before{left:100%;}
+.enter-btn:hover{
+  transform:translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 15px 35px rgba(255,122,162,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.4);
+}
+
+/* Enhanced Chocolate Grid */
+.choco-grid{
+  margin-top:12px;
+  display:grid;
+  grid-template-columns: repeat(2,1fr);
+  gap:15px;
+  width:100%;
+}
+.choco{
+  height:120px;
+  border-radius:18px;
+  background: linear-gradient(145deg,
+    rgba(255,255,255,0.7) 0%, 
+    rgba(255,255,255,0.5) 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  cursor:pointer;
+  transition:all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border:2px solid transparent;
+  overflow:hidden;
+  box-shadow: 
+    0 10px 30px rgba(0,0,0,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+}
+.choco::before{
+  content:'';
+  position:absolute;
+  top:0; left:0; right:0; bottom:0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+  transform:translateX(-100%);
+  transition: transform 0.6s;
+}
+.choco:hover::before{transform:translateX(100%);}
+.choco:hover{
+  transform:translateY(-10px) rotate(-2deg) scale(1.05);
+  border-color:var(--accent);
+  box-shadow: 
+    0 20px 50px rgba(255,122,162,0.2),
+    0 0 30px rgba(255,122,162,0.1);
+}
+.choco img{
+  width:85px;
+  height:85px;
+  object-fit:contain;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+  transition: transform 0.3s ease;
+}
+.choco:hover img{transform:scale(1.1) rotate(5deg);}
+.choco-label{
+  position:absolute;
+  left:15px;
+  bottom:12px;
+  font-size:13px;
+  color:var(--muted);
+  font-weight:500;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+/* Enhanced Right panel */
+.right{
+  padding:20px;
+  border-radius:20px;
+  min-height:550px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  background: linear-gradient(145deg, 
+    rgba(255,255,255,0.7) 0%, 
+    rgba(255,255,255,0.6) 100%);
+  backdrop-filter: blur(10px);
+  border:1px solid rgba(255,255,0.3);
+  overflow:auto;
+  position:relative;
+  box-shadow: 
+    0 20px 40px rgba(255,122,162,0.1),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+}
+.paper-card{
+  background:#fff;
+  border-radius:20px;
+  padding:25px;
+  box-shadow: 
+    0 25px 50px rgba(26,18,20,0.08),
+    0 0 0 1px rgba(255,255,255,0.5);
+  opacity:0; 
+  height:100%; 
+  display:none;
+  transform:translateY(20px);
+  transition:all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.paper-card.active{
+  opacity:1; 
+  display:block;
+  transform:translateY(0);
+}
+.paper-title{
+  font-family:"Great Vibes",cursive;
+  font-size:32px;
+  color:#d94f7a;
+  margin-bottom:8px;
+  text-shadow: 0 2px 4px rgba(217,79,122,0.3);
+}
+.paper-sub{font-size:14px;color:var(--muted); margin-bottom:20px;}
+.stationery{
+  background:linear-gradient(145deg,#fffafc,#fff6f8);
+  border-radius:15px;
+  padding:20px;
+  color:#3e2e36;
+  border:1px solid rgba(255,211,227,0.3);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+/* Auto-playing Audio - Hidden controls */
+.auto-audio{
+  display:none;
+}
+.audio-title{
+  font-size:14px;
+  color:var(--accent);
+  margin:10px 0;
+  font-weight:600;
+  text-align:center;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse{
+  0%, 100%{opacity:1;}
+  50%{opacity:0.7;}
+}
+
+/* Playlist Section */
+.playlist-container{
+  max-height:400px;
+  overflow-y:auto;
+  padding:10px;
+  border-radius:12px;
+  background:rgba(255,248,250,0.8);
+}
+.playlist-item{
+  padding:12px;
+  margin:8px 0;
+  background:linear-gradient(90deg, rgba(255,122,162,0.1), transparent);
+  border-radius:10px;
+  border-left:3px solid var(--accent);
+  cursor:pointer;
+  transition:all 0.3s ease;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.playlist-item:hover{
+  background:linear-gradient(90deg, var(--accent), var(--accent-2));
+  color:white;
+  transform:translateX(5px);
+  box-shadow:0 5px 15px rgba(255,122,162,0.2);
+}
+.playlist-item.playing{
+  background:linear-gradient(90deg, var(--accent-glow), var(--accent-2));
+  color:white;
+  box-shadow:0 0 20px rgba(255,105,180,0.3);
+}
+
+/* Buttons */
+.btn{
+  padding:12px 18px;
+  border-radius:12px;
+  border:0;
+  cursor:pointer;
+  font-weight:600;
+  font-size:14px;
+  transition:all 0.3s ease;
+  box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+.btn-ghost{
+  background:transparent;
+  border:2px solid rgba(80,60,80,0.15);
+  color:var(--muted);
+}
+.btn-ghost:hover{
+  background:var(--accent);
+  color:white;
+  transform:translateY(-2px);
+  box-shadow:0 8px 25px rgba(255,122,162,0.2);
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:white;
+  box-shadow:0 8px 25px rgba(255,122,162,0.2);
+}
+.btn-primary:hover{
+  transform:translateY(-3px) scale(1.05);
+  box-shadow:0 15px 35px rgba(255,122,162,0.3);
+}
+
+/* Textarea */
+textarea{
+  resize:none;
+  width:100%;
+  height:220px;
+  border-radius:12px;
+  border:2px solid #ffd3e3;
+  padding:15px;
+  font-family:"Poppins", sans-serif;
+  font-size:14px;
+  line-height:1.6;
+  background:rgba(255,255,255,0.9);
+  transition:all 0.3s ease;
+}
+textarea:focus{
+  outline:none;
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(255,122,162,0.1);
+}
+
+/* Responsive */
+@media(max-width:900px){
+  .wrap{grid-template-columns:1fr; gap:15px;}
+  .left{order:2; padding:20px;}
+  .right{order:1; padding:15px; min-height:400px;}
+  .choco-grid{grid-template-columns:repeat(2,1fr); gap:10px;}
+  .choco{height:100px;}
+  .choco img{width:70px; height:70px;}
+}
+</style>
+</head>
+<body>
+
+<!-- Enhanced Particle Background -->
+<div class="particle-layer" id="particleLayer"></div>
+<div class="floating-hearts" id="floatingHearts"></div>
+
+<div class="wrap">
+  <!-- Left Panel -->
+  <div class="left" id="leftPanel">
+    <!-- Brand (only visible after login) -->
+    <div class="brand" id="brandSection" style="display:none;">
+      <h2>Chocolate</h2>
+      <p>Sweet memories & letters</p>
+    </div>
+
+    <!-- Login - Clean -->
+    <div id="loginBlock" class="login">
+      <div class="field"><input id="name" placeholder="Your sweet name" /></div>
+      <div class="field"><input id="password" type="password" placeholder="Secret password" /></div>
+      <button class="enter-btn" id="enterBtn">Enter the Sweet Room 💕</button>
+    </div>
+
+    <!-- Menu -->
+    <div id="menuBlock" style="display:none; margin-top:15px;">
+      <p style="font-size:14px;color:var(--muted);margin-bottom:12px; text-align:center;">Choose your flavor of love</p>
+      <div class="choco-grid">
+        <div class="choco" data-action="dark">
+          <img src="dark.png">
+          <div class="choco-label">Dark Chocolate</div>
+        </div>
+        <div class="choco" data-action="cookies">
+          <img src="cnc.png">
+          <div class="choco-label">Cookies & Cream</div>
+        </div>
+        <div class="choco" data-action="vanilla">
+          <img src="vanilla.png">
+          <div class="choco-label">Vanilla Dream</div>
+        </div>
+        <div class="choco" data-action="straw">
+          <img src="strawberry.png">
+          <div class="choco-label">Strawberry Love</div>
+        </div>
+      </div>
+      <div style="margin-top:15px;text-align:center">
+        <button id="logoutBtn" class="btn btn-ghost" style="width:90%;">Leave Sweet Room 💔</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="right">
+    <!-- Welcome -->
+    <div class="paper-card active" id="welcomePanel">
+      <div class="paper-title">Welcome to Our Sweet World 💖</div>
+      <div class="paper-sub">A place for chocolate, music, and memories</div>
+      <div class="stationery">
+        <p style="text-align:center; font-size:16px; line-height:1.6;">
+          Each chocolate holds a special memory, 
+          a song that speaks to our hearts, 
+          and moments we'll cherish forever. 
+          Choose your flavor and let the sweetness begin...
+        </p>
+        <!-- Login Music -->
+        <div style="text-align:center; margin:20px 0;">
+          <audio class="auto-audio" id="loginAudio" loop>
+            <source src="daylight.mp3" type="audio/mpeg">
+          </audio>
+          <div class="audio-title">Daylight - Taylor Swift ✨</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark Chocolate -->
+    <div class="paper-card" id="darkPanel">
+      <div class="paper-title">Dark Chocolate Memories 🌙</div>
+      <div class="stationery">
+        <p style="font-style:italic; text-align:center;">For those deep, midnight conversations that last until dawn...</p>
+        
+        <!-- Auto-playing main song -->
+        <div style="text-align:center; margin:20px 0;">
+          <audio class="auto-audio" id="darkAudio" loop preload="auto">
+            <source src="pagibig.mp3" type="audio/mpeg">
+          </audio>
+          <div class="audio-title">Pag-ibig ng Ikaw at Ako - Earl Agustin 💕</div>
+        </div>
+
+        <!-- Full Playlist -->
+        <div class="playlist-container">
+          <h4 style="text-align:center; color:var(--accent); margin-bottom:15px;">Complete Playlist</h4>
+          <div class="playlist-item" data-song="Pag Ibig ng Ikaw at Ako by Earl Agustin">
+            Pag Ibig ng Ikaw at Ako - Earl Agustin
+          </div>
+          <div class="playlist-item" data-song="Dalangin by Earl Agustin">
+            Dalangin - Earl Agustin
+          </div>
+          <div class="playlist-item" data-song="Lover by Taylor Swift">
+            Lover - Taylor Swift
+          </div>
+          <div class="playlist-item" data-song="Patutunguhan by Ben&Ben">
+            Patutunguhan - Ben&Ben
+          </div>
+          <div class="playlist-item" data-song="Love. by Wave to Earth">
+            Love. - Wave to Earth
+          </div>
+          <div class="playlist-item" data-song="Season by Wave to Earth">
+            Season - Wave to Earth
+          </div>
+          <div class="playlist-item" data-song="Love Is by The Ridleys">
+            Love Is - The Ridleys
+          </div>
+          <div class="playlist-item" data-song="Aphrodite by The Ridleys">
+            Aphrodite - The Ridleys
+          </div>
+          <div class="playlist-item" data-song="Dito Sakin by Earl Agustin">
+            Dito Sakin - Earl Agustin
+          </div>
+          <div class="playlist-item" data-song="But I like You by BOYNEXTDOOR">
+            But I like You - BOYNEXTDOOR
+          </div>
+        </div>
+
+        <div style="text-align:right; margin-top:20px;">
+          <button class="btn btn-ghost" onclick="backToMenu()">Back to Chocolates</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cookies & Cream - Love Notes -->
+    <div class="paper-card" id="cookiesPanel">
+      <div class="paper-title">Love Notes 💌</div>
+      <div class="stationery">
+        <!-- Auto-playing song -->
+        <div style="text-align:center; margin-bottom:20px;">
+          <audio class="auto-audio" id="cookiesAudio" loop preload="auto">
+            <source src="aphrodite.mp3" type="audio/mpeg">
+          </audio>
+          <div class="audio-title">Aphrodite - The Ridleys ✨</div>
+        </div>
+
+        <textarea id="loveNote" placeholder="Write your sweetest thoughts here... 💭">My dearest love,</textarea>
+        
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:15px;">
+          <span style="font-size:14px;color:var(--muted);">Saved in our hearts: <span id="savedLabel">No</span></span>
+          <div>
+            <button class="btn btn-ghost" onclick="clearNote()">Clear</button>
+            <button class="btn btn-primary" onclick="saveNote()">Save Forever 💖</button>
+          </div>
+        </div>
+        <div style="text-align:right;margin-top:15px;">
+          <button class="btn btn-ghost" onclick="backToMenu()">Back to Chocolates</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vanilla -->
+    <div class="paper-card" id="vanillaPanel">
+      <div class="paper-title">Vanilla Moments ☀️</div>
+      <div class="stationery">
+        <p style="text-align:center; font-style:italic;">Like warm mornings wrapped in your embrace...</p>
+        
+        <!-- Auto-playing song -->
+        <div style="text-align:center; margin:20px 0;">
+          <audio class="auto-audio" id="vanillaAudio" loop preload="auto">
+            <source src="araw.mp3" type="audio/mpeg">
+          </audio>
+          <div class="audio-title">Araw-Araw - Your Sweet Song 🌸</div>
+        </div>
+
+        <div style="text-align:center; margin:20px 0; padding:15px; background:rgba(255,248,250,0.8); border-radius:12px;">
+          <p>Every moment with you feels like a gentle vanilla sunrise—soft, warm, and full of promise. These are the days I want to hold onto forever. Every laugh, every glance, every quiet pause between us feels like time slowing down just for our hearts to breathe together. You bring a calm I never knew I needed and a joy I never want to lose. With you, even the simplest moments turn into memories painted in gold—sweet, endless, and beautifully ours.
+
+Every touch feels like home, every word you say lingers like a melody I never want to stop hearing. You make ordinary days feel like poetry — gentle, sincere, and full of warmth. When I’m with you, the world fades into soft colors, and all that matters is the way you smile, the way you make me feel seen. I want to wake up to mornings wrapped in your presence, to sunsets painted with our laughter. You are my calm after every storm, my favorite chapter in a story I never want to end. With you, forever doesn’t feel long enough — it feels just right.
+</p>
+        </div>
+
+        <div style="text-align:right;">
+          <button class="btn btn-ghost" onclick="backToMenu()">Back to Chocolates</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Strawberry -->
+    <div class="paper-card" id="strawPanel">
+      <div class="paper-title">Strawberry Love Letters 🍓</div>
+      <div class="stationery">
+        <!-- Auto-playing song -->
+        <div style="text-align:center; margin-bottom:20px;">
+          <audio class="auto-audio" id="strawAudio" loop preload="auto">
+            <source src="love.mp3" type="audio/mpeg">
+          </audio>
+          <div class="audio-title">Love Is - The Ridleys 💝</div>
+        </div>
+
+        <div style="background:rgba(255,248,250,0.8); padding:20px; border-radius:15px; margin:15px 0; border-left:4px solid var(--accent);">
+          <p style="font-size:16px; line-height:1.7; text-align:center;">
+            My sweetest love, my baby,<br><br>
+            
+            Happy 3rd Monthsary, Love! 💖 I love you so much. These three months with you have been nothing short of amazing, and honestly, words can’t capture how much you mean to me. I’m just so glad I get to share my days, my thoughts, and my heart with you. Thank you for being you—for your laughter, your warmth, and the way you make even the simplest moments feel special. I’m excited for every memory we’ve yet to make, every smile we’ve yet to share, and every moment I get to call you mine.<br><br>
+            
+            Every single day with you feels like a new reason to be grateful. You’ve brought so much happiness, comfort, and meaning into my life in such a short time, and I can’t imagine my days without you anymore. You’re not just someone I love — you’re my safe place, my peace, and my favorite person to come home to. Three months may not seem long, but with you, it feels like forever in the best way. You’ve made me believe in something real — in love that’s gentle, patient, and true. I don’t know what the future holds, but I know I want you in all of it.<br><br>
+
+            So here’s to us—to every laugh, every hug, every late-night talk, and every quiet moment we’ve shared. You’re my favorite part of every day, and I’ll keep choosing you, again and again, no matter what. ❤️
+          </p>
+        </div>
+
+        <div style="text-align:right;">
+          <button class="btn btn-ghost" onclick="backToMenu()">Back to Chocolates</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Audio Management
+const audioManager = {
+  currentAudio: null,
+  loginAudio: document.getElementById('loginAudio'),
+  darkAudio: document.getElementById('darkAudio'),
+  cookiesAudio: document.getElementById('cookiesAudio'),
+  vanillaAudio: document.getElementById('vanillaAudio'),
+  strawAudio: document.getElementById('strawAudio'),
+  
+  playAudio(audioElement, songName) {
+    // Pause current audio
+    if (this.currentAudio && this.currentAudio !== audioElement) {
+      this.currentAudio.pause();
+      this.currentAudio.currentTime = 0;
+    }
+    
+    // Play new audio
+    audioElement.volume = 0.3; // Gentle volume
+    audioElement.play().catch(e => console.log('Audio play failed:', e));
+    this.currentAudio = audioElement;
+    
+    // Update playing state
+    document.querySelectorAll('.playlist-item').forEach(item => {
+      item.classList.remove('playing');
+      if (item.dataset.song === songName) {
+        item.classList.add('playing');
+      }
+    });
+  },
+  
+  stopAll() {
+    Object.values(this).forEach(audio => {
+      if (audio && typeof audio.pause === 'function') {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    });
+    this.currentAudio = null;
+  }
+};
+
+// Enhanced Particle System
+function createEnhancedParticles() {
+  const particleLayer = document.getElementById('particleLayer');
+  const floatingHearts = document.getElementById('floatingHearts');
+  
+  // Clear existing particles
+  particleLayer.innerHTML = '';
+  floatingHearts.innerHTML = '';
+  
+  // Create hearts
+  for (let i = 0; i < 25; i++) {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = Math.random() * 100 + '%';
+    heart.style.width = heart.style.height = (8 + Math.random() * 8) + 'px';
+    heart.style.animationDuration = (6 + Math.random() * 4) + 's';
+    heart.style.animationDelay = Math.random() * 2 + 's';
+    particleLayer.appendChild(heart);
+    
+    // Floating text hearts
+    const textHeart = document.createElement('div');
+    textHeart.className = 'floating-heart';
+    textHeart.innerHTML = '💖';
+    textHeart.style.left = Math.random() * 100 + '%';
+    textHeart.style.animationDuration = (12 + Math.random() * 8) + 's';
+    textHeart.style.animationDelay = Math.random() * 5 + 's';
+    textHeart.style.fontSize = (16 + Math.random() * 12) + 'px';
+    floatingHearts.appendChild(textHeart);
+  }
+  
+  // Create sparkles
+  for (let i = 0; i < 40; i++) {
+    const spark = document.createElement('div');
+    spark.className = 'spark';
+    spark.style.left = Math.random() * 100 + '%';
+    spark.style.width = spark.style.height = (2 + Math.random() * 6) + 'px';
+    spark.style.animationDuration = (4 + Math.random() * 3) + 's';
+    spark.style.animationDelay = Math.random() * 3 + 's';
+    particleLayer.appendChild(spark);
+  }
+  
+  // Create glow particles
+  for (let i = 0; i < 15; i++) {
+    const glow = document.createElement('div');
+    glow.className = 'glow-particle';
+    glow.style.left = Math.random() * 100 + '%';
+    glow.style.width = glow.style.height = (20 + Math.random() * 30) + 'px';
+    glow.style.animationDuration = (8 + Math.random() * 6) + 's';
+    glow.style.animationDelay = Math.random() * 4 + 's';
+    particleLayer.appendChild(glow);
+  }
+}
+
+// DOM Elements
+const enterBtn = document.getElementById('enterBtn');
+const loginBlock = document.getElementById('loginBlock');
+const menuBlock = document.getElementById('menuBlock');
+const leftPanel = document.getElementById('leftPanel');
+const brandSection = document.getElementById('brandSection');
+const panels = {
+  welcome: document.getElementById('welcomePanel'),
+  dark: document.getElementById('darkPanel'),
+  cookies: document.getElementById('cookiesPanel'),
+  vanilla: document.getElementById('vanillaPanel'),
+  straw: document.getElementById('strawPanel')
+};
+
+// Enter Sweet Room
+enterBtn.addEventListener('click', () => {
+  const name = document.getElementById('name').value.trim();
+  const password = document.getElementById('password').value.trim();
+  
+  if (!name) {
+    alert('Please enter your sweet name first! 💕');
+    return;
+  }
+  
+  if (!password) {
+    alert('Please enter your secret password! 🔐');
+    return;
+  }
+  
+  // Hide login, show menu and brand
+  loginBlock.style.display = 'none';
+  menuBlock.style.display = 'flex';
+  brandSection.style.display = 'block';
+  leftPanel.style.justifyContent = 'flex-start';
+  
+  // Start login music
+  audioManager.playAudio(audioManager.loginAudio, 'Daylight by Taylor Swift');
+  
+  showPanel('welcome');
+  loadNote();
+  
+  // Create celebration particles
+  createCelebrationEffect();
+});
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  if (!confirm('Leave our sweet room? 💔')) return;
+  
+  audioManager.stopAll();
+  backToMenu();
+  loginBlock.style.display = 'flex';
+  menuBlock.style.display = 'none';
+  brandSection.style.display = 'none';
+  leftPanel.style.justifyContent = 'center';
+  document.getElementById('name').value = '';
+  document.getElementById('password').value = '';
+});
+
+// Chocolate selection with music
+document.querySelectorAll('.choco').forEach(choco => {
+  choco.addEventListener('click', () => {
+    const action = choco.dataset.action;
+    menuBlock.style.display = 'none';
+    leftPanel.style.display = 'none';
+    
+    // Play corresponding music
+    switch(action) {
+      case 'dark':
+        audioManager.playAudio(audioManager.darkAudio, 'Pag Ibig ng Ikaw at Ako by Earl Agustin');
+        break;
+      case 'cookies':
+        audioManager.playAudio(audioManager.cookiesAudio, 'Aphrodite by The Ridleys');
+        break;
+      case 'vanilla':
+        audioManager.playAudio(audioManager.vanillaAudio, 'Araw-Araw');
+        break;
+      case 'straw':
+        audioManager.playAudio(audioManager.strawAudio, 'Love Is by The Ridleys');
+        break;
+    }
+    
+    showPanel(action);
+  });
+});
+
+// Playlist interaction
+document.querySelectorAll('.playlist-item').forEach(item => {
+  item.addEventListener('click', () => {
+    const songName = item.dataset.song;
+    // Here you could implement actual song switching
+    // For now, just highlight the selection
+    document.querySelectorAll('.playlist-item').forEach(i => i.classList.remove('playing'));
+    item.classList.add('playing');
+    
+    // Create click celebration
+    createClickEffect(item);
+  });
+});
+
+// Show panel function
+function showPanel(name) {
+  for (const key in panels) {
+    panels[key].classList.remove('active');
+  }
+  panels[name].classList.add('active');
+  document.querySelector('.right').scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Back to menu
+function backToMenu() {
+  for (const key in panels) {
+    panels[key].classList.remove('active');
+  }
+  panels['welcome'].classList.add('active');
+  menuBlock.style.display = 'flex';
+  leftPanel.style.display = 'flex';
+  leftPanel.style.justifyContent = 'flex-start';
+}
+
+// Love note functions
+function saveNote() {
+  const note = document.getElementById('loveNote').value;
+  localStorage.setItem('loveNote', note);
+  document.getElementById('savedLabel').innerText = 'Yes 💖';
+  
+  // Celebration effect
+  createCelebrationEffect();
+  alert('Your love note is saved in our hearts forever! 💕');
+}
+
+function loadNote() {
+  const saved = localStorage.getItem('loveNote');
+  if (saved) {
+    document.getElementById('loveNote').value = saved;
+    document.getElementById('savedLabel').innerText = 'Yes 💖';
+  }
+}
+
+function clearNote() {
+  if (confirm('Clear this sweet note? 💔')) {
+    document.getElementById('loveNote').value = '';
+    document.getElementById('savedLabel').innerText = 'No';
+    localStorage.removeItem('loveNote');
+  }
+}
+
+// Celebration Effects
+function createCelebrationEffect() {
+  for (let i = 0; i < 20; i++) {
+    setTimeout(() => {
+      const heart = document.createElement('div');
+      heart.innerHTML = '💖';
+      heart.style.position = 'fixed';
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.top = window.innerHeight + 'px';
+      heart.style.fontSize = (20 + Math.random() * 20) + 'px';
+      heart.style.pointerEvents = 'none';
+      heart.style.zIndex = '1000';
+      heart.style.animation = 'floatHeart 2s ease-out forwards';
+      document.body.appendChild(heart);
+      
+      setTimeout(() => heart.remove(), 2000);
+    }, i * 100);
+  }
+}
+
+function createClickEffect(element) {
+  const rect = element.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  
+  for (let i = 0; i < 8; i++) {
+    const sparkle = document.createElement('div');
+    sparkle.innerHTML = '✨';
+    sparkle.style.position = 'fixed';
+    sparkle.style.left = x + 'px';
+    sparkle.style.top = y + 'px';
+    sparkle.style.fontSize = '20px';
+    sparkle.style.pointerEvents = 'none';
+    sparkle.style.zIndex = '1000';
+    sparkle.style.animation = 'sparkAnim 1s ease-out forwards';
+    document.body.appendChild(sparkle);
+    
+    setTimeout(() => sparkle.remove(), 1000);
+  }
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+  createEnhancedParticles();
+  
+  // Recreate particles periodically
+  setInterval(createEnhancedParticles, 15000);
+  
+  // Add click effects to buttons
+  document.querySelectorAll('.btn, .choco, .playlist-item').forEach(el => {
+    el.addEventListener('click', (e) => {
+      createClickEffect(e.currentTarget);
+    });
+  });
+  
+  // Smooth scrolling for playlist
+  document.querySelector('.playlist-container').addEventListener('scroll', () => {
+    // Add subtle glow effect on scroll
+  });
+});
+
+// Add global click effect
+document.addEventListener('click', (e) => {
+  if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+    // Create subtle ripple effect
+    const ripple = document.createElement('div');
+    ripple.style.position = 'fixed';
+    ripple.style.left = e.clientX + 'px';
+    ripple.style.top = e.clientY + 'px';
+    ripple.style.width = '4px';
+    ripple.style.height = '4px';
+    ripple.style.background = 'radial-gradient(circle, var(--accent) 0%, transparent 70%)';
+    ripple.style.borderRadius = '50%';
+    ripple.style.pointerEvents = 'none';
+    ripple.style.zIndex = '999';
+    ripple.style.animation = 'sparkAnim 0.6s ease-out forwards';
+    document.body.appendChild(ripple);
+    
+    setTimeout(() => ripple.remove(), 600);
+  }
+});
+</script>
+
+</body>
+</html>
+
+
